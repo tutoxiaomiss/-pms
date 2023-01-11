@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ybt.mapper.AdminMapper">
+
+	<resultMap id="adminMap" type="admin">
+		<id column="u_id" property="id" />
+		<result column="u_adminname" property="adminName" />
+		<result column="u_adminpassword" property="adminPwd" />
+	</resultMap>
+
+	<select id="chickAdmin" resultType="int" parameterType="String">
+		select
+		count(u_adminname) from u_admin where u_adminname=#{adminName}
+
+
+
+	</select>
+	<insert id="register" parameterType="admin">
+		insert into u_admin
+		(u_adminname,u_adminpassword) values
+		(#{adminName},#{adminPwd})
+
+	</insert>
+	<select id="save" resultType="admin" parameterType="admin"
+		resultMap="adminMap">
+
+		select u_adminname ,u_adminpassword from u_admin where
+		u_adminname=#{adminName} and u_adminpassword=#{adminPwd}
+	</select>
+	<select id="getTotalRecords" resultType="int">
+		select count(u_id) from
+		u_admin
+	</select>
+	<select id="findPageRecords" resultType="admin" parameterType="int"
+		resultMap="adminMap">
+		SELECT u_id,u_adminname,u_adminpassword FROM u_admin ORDER BY u_id
+		LIMIT
+		#{startIndex},#{pagesize}
+	</select>
+	<select id="byIdAdmin" resultType="admin" parameterType="int"
+		resultMap="adminMap">
+		select u_id,u_adminname,u_adminpassword from u_admin where
+		u_id=#{intId}
+	</select>
+	<update id="updateAdmin" parameterType="admin">
+		update u_admin set
+		u_adminname=#{adminName},u_adminpassword=#{adminPwd}
+		where u_id = #{id}
+	</update>
+	<delete id="deleteAdmin" parameterType="int">
+		delete from u_admin where
+		u_id=#{intId}
+	</delete>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+        <mapper namespace="com.ybt.mapper.NewsTypeMapper">
+        
+        <insert id="addNewsType">
+        insert into u_typenews (type_name) values (#{typename})
+        </insert>
+        <select id="getTotalRecords" resultType="int">
+         select count(type_id) from u_typenews
+        </select>
+        <select id="findPageRecords" resultType="newsType" parameterType="int" >
+        SELECT type_id,type_name FROM u_typenews ORDER BY type_id DESC LIMIT #{startIndex},#{pagesize} 
+        </select>
+        <select id="chickTypeName" resultType="int" parameterType="String">
+        select count(type_name) from u_typenews where type_name = #{typeName}
+        </select>
+        <select id="findOneNewsType" resultType="newsType" parameterType="int">
+        	select type_id,type_name from u_typenews where type_id=#{parseInt}
+        </select>
+        <update id="updateNewsType" parameterType="newsType">
+        	update u_typenews set type_name=#{typeName} where type_id=#{typeId} 
+        </update>
+        <delete id="deleteNewsType" parameterType="int">
+			delete from u_typenews where type_id=#{parseInt}      
+        </delete>
+        <select id="NewsTypeName" resultType="newsType" >
+        	select type_name from u_typenews
+        </select>
+        <select id="NewsTypeName2" resultType="newsType" parameterType="String">
+        select type_name from u_typenews ORDER BY  type_name =#{type} 
+        </select>
+        </mapper>

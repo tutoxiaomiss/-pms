@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ybt.mapper.NewsMapper">
+	<insert id="addNews" parameterType="news">
+		insert into u_news
+		(type,title,content,date,author) values
+		(#{type},#{title},#{content},#{date},#{author})
+
+	</insert>
+	<select id="getTotalRecords" resultType="news" parameterType="String">
+		SELECT  count(id)  id,type,title,content,date,author  FROM u_news WHERE title like CONCAT('%',#{title},'%') and type like CONCAT('%',#{type},'%')  
+
+	</select>
+	<select id="findAllNews" resultType="news">
+		SELECT
+		id,type,title,content,date,author FROM u_news WHERE title like
+		CONCAT('%',#{title},'%') and type like CONCAT('%',#{type},'%') ORDER BY
+		id DESC LIMIT #{startIndex},#{pagesize}
+	</select>
+	<select id="findoneNews" resultType="news" parameterType="int">
+		select id,type,title,content,date,author from u_news where id=#{parseInt}
+	</select>
+	<update id="updateNews" parameterType="news">
+		update u_news set type=#{type},title=#{title},content=#{content},author=#{author} where id = #{id}
+	</update>
+	<delete id="deleteNews" parameterType="int">
+		delete from u_news where id=#{parseInt}
+	</delete>
+</mapper>
